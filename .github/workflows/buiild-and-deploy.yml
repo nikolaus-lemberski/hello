@@ -36,10 +36,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Kubernetes context
-        uses: azure/k8s-actions/k8s-set-context@master
+        uses: azure/k8s-set-context@v1
         with:
-          k8s-url: ${{ secrets.KUBECTL_SERVER }}
-          k8s-secret: ${{ secrets.KUBECTL_SA_TOKEN }}
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG_SA_GITHUB }}
       - name: Deploy to Kubernetes
         uses: azure/k8s-deploy@v1
         with:
