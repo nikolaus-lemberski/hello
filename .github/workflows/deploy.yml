@@ -17,7 +17,7 @@ jobs:
         uses: azure/k8s-set-context@v1
         with:
           method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG_SA_GITHUB }}
+          kubeconfig: '${{ secrets.KUBECONFIG_SA_GITHUB }}'
           context: nlemberski-aws-tas
         id: setcontext
       - name: Deploy to Kubernetes
