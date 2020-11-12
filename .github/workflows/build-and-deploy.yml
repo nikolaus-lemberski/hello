@@ -26,7 +26,7 @@ jobs:
       - name: Tag image
         run: docker tag hello:0.0.1-SNAPSHOT lemberski/hello:${GITHUB_SHA::8}
       - name: Publish image
-        run: docker push lemberski/hello:${GITHUB_SHA::8}
+        run: docker push lemberski/hello:$(echo ${GITHUB_SHA::8})
       - name: Print image tag
         run: echo ${GITHUB_SHA::8}
   deploy:
