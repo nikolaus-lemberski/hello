@@ -1,4 +1,4 @@
-name: Build, push and deploy
+name: Build and push to docker
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Run job
+    name: Build and push image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,20 +29,3 @@ jobs:
         run: docker push lemberski/hello:${GITHUB_SHA::8}
       - name: Print image tag
         run: echo ${GITHUB_SHA::8}
-      - name: Kubernetes context
-        uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: '${{ secrets.KUBECONFIG_SA_GITHUB }}'
-          context: nlemberski-aws-tas
-        id: setcontext
-      - name: Deploy to Kubernetes
-        uses: azure/k8s-deploy@v1
-        with:
-          images: docker.io/lemberski/hello:${GITHUB_SHA::8}
-          manifests: |
-            deploy.yml
-          strategy: canary
-          percentage: 50
-      - name: Print image
-        run: echo docker.io/lemberski/hello:${GITHUB_SHA::8}
