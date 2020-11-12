@@ -1,0 +1,28 @@
+name: Promote canary release
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Image name'
+        required: true
+
+jobs:
+  promote:
+    name: Promote
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Kubernetes context
+        uses: azure/k8s-actions/k8s-set-context@master
+        with:
+          k8s-url: ${{ secrets.KUBECTL_SERVER }}
+          k8s-secret: ${{ secrets.KUBECTL_SA_TOKEN }}
+      - name: Do promote
+        uses: azure/k8s-deploy@v1
+        with:
+          images: ${{ github.event.inputs.image }}"
+          manifests: |
+            deploy.yml
+          strategy: canary
+          percentage: 50
