@@ -10,6 +10,8 @@ jobs:
   build:
     name: Build and push image
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${GITHUB_SHA}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -27,8 +29,8 @@ jobs:
         run: docker tag hello:0.0.1-SNAPSHOT lemberski/hello:${GITHUB_SHA}
       - name: Publish image
         run: docker push lemberski/hello:${GITHUB_SHA}
-      - name: Print image name
-        run: echo lemberski/hello:${GITHUB_SHA}
+      - name: Print image tag
+        run: echo ${GITHUB_SHA}
   deploy:
     name: Deploy to Kubernetes
     needs: build
@@ -45,11 +47,11 @@ jobs:
       - name: Deploy to Kubernetes
         uses: azure/k8s-deploy@v1
         with:
-          images: docker.io/lemberski/hello:${GITHUB_SHA}
+          images: docker.io/lemberski/hello:${{needs.build.outputs.tag}}
           manifests: |
             deploy.yml
           strategy: canary
           percentage: 50
       - name: Print image name
-        run: echo lemberski/hello:${GITHUB_SHA}
+        run: echo lemberski/hello:${{needs.build.outputs.tag}}
 
