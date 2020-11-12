@@ -29,7 +29,7 @@ jobs:
         run: docker tag hello:0.0.1-SNAPSHOT lemberski/hello:${GITHUB_SHA}
       - name: Publish image
         run: docker push lemberski/hello:${GITHUB_SHA}
-      - name: "Print image name"
+      - name: Print image name
         run: echo ${{outputs.image}}
   deploy:
     name: Deploy to Kubernetes
@@ -52,6 +52,6 @@ jobs:
             deploy.yml
           strategy: canary
           percentage: 50
-      - name: "Print image name"
+      - name: Print image name
         run: echo ${{needs.build.outputs.image}}
 
