@@ -11,7 +11,7 @@ jobs:
     name: Build and push image
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{GITHUB_SHA::8}}
+      tag: ${GITHUB_SHA::8}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -26,9 +26,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Tag image
-        run: docker tag hello:0.0.1-SNAPSHOT lemberski/hello:${{GITHUB_SHA::8}}
+        run: docker tag hello:0.0.1-SNAPSHOT lemberski/hello:${GITHUB_SHA::8}
       - name: Publish image
-        run: docker push lemberski/hello:${{GITHUB_SHA::8}}
+        run: docker push lemberski/hello:${GITHUB_SHA::8}
       - name: Print image tag
         run: echo ${{GITHUB_SHA::8}}
   deploy:
