@@ -1,4 +1,4 @@
-name: Promote canary release
+name: Reject canary release
 
 on:
   workflow_dispatch:
