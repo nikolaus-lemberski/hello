@@ -10,8 +10,6 @@ jobs:
   build:
     name: Build and push image
     runs-on: ubuntu-latest
-    outputs:
-      tag: ${GITHUB_SHA::8}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -37,8 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Print image tag from previous job
-        run: echo ${{needs.build.outputs.tag}}
       - name: Kubernetes context
         uses: azure/k8s-set-context@v1
         with:
@@ -49,7 +45,7 @@ jobs:
       - name: Deploy to Kubernetes
         uses: azure/k8s-deploy@v1
         with:
-          images: docker.io/lemberski/hello:${{needs.build.outputs.tag}}
+          images: 'docker.io/lemberski/hello:${GITHUB_SHA::8}'
           manifests: |
             deploy.yml
           strategy: canary
