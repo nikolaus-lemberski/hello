@@ -25,4 +25,4 @@ jobs:
           manifests: |
             deploy.yml
           strategy: canary
-          percentage: 50
+          action: promote
