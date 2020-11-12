@@ -18,6 +18,8 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG_SA_GITHUB }}
+          context: nlemberski-aws-tas
+        id: setcontext
       - name: Do promote
         uses: azure/k8s-deploy@v1
         with:
