@@ -3,8 +3,8 @@ name: Promote canary release
 on:
   workflow_dispatch:
     inputs:
-      image:
-        description: 'Image name'
+      image_tag:
+        description: 'Image tag'
         required: true
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
       - name: Do promote
         uses: azure/k8s-deploy@v1
         with:
-          images: ${{ github.event.inputs.image }}"
+          images: docker.io/lemberski/hello:${{ github.event.inputs.image_tag }}
           manifests: |
             deploy.yml
           strategy: canary
