@@ -1,4 +1,4 @@
-name: Build image and deploy to Kubernetes
+name: Build, push and deploy
 
 on:
   push:
