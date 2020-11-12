@@ -1,10 +1,8 @@
 name: Build and push to docker
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -23,9 +21,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Get the release version
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
       - name: Tag image
-        run: docker tag hello:0.0.1-SNAPSHOT lemberski/hello:${GITHUB_SHA::8}
+        run: docker tag hello:0.0.1-SNAPSHOT lemberski/hello:${{steps.vars.outputs.tag}}
       - name: Publish image
-        run: docker push lemberski/hello:${GITHUB_SHA::8}
-      - name: Print image tag
-        run: echo ${GITHUB_SHA::8}
+        run: docker push lemberski/hello:${{steps.vars.outputs.tag}}
+      - name: Print image name
+        run: echo lemberski/hello:${{steps.vars.outputs.tag}}

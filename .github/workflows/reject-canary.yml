@@ -1,0 +1,30 @@
+name: Promote canary release
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Image tag'
+        required: true
+
+jobs:
+  promote:
+    name: Promote
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Kubernetes context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: '${{ secrets.KUBECONFIG_SA_GITHUB }}'
+          context: nlemberski-aws-tas
+        id: setcontext
+      - name: Do reject
+        uses: azure/k8s-deploy@v1
+        with:
+          images: docker.io/lemberski/hello:${{ github.event.inputs.image_tag }}
+          manifests: |
+            deploy.yml
+          strategy: canary
+          action: reject
