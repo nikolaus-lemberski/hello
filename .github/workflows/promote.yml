@@ -1,4 +1,4 @@
-name: Reject canary release
+name: Promote canary release
 
 on:
   workflow_dispatch:
@@ -20,11 +20,11 @@ jobs:
           kubeconfig: '${{ secrets.KUBECONFIG_SA_GITHUB }}'
           context: nlemberski-aws-tas
         id: setcontext
-      - name: Do reject
+      - name: Do promote
         uses: azure/k8s-deploy@v1
         with:
           images: docker.io/lemberski/hello:${{ github.event.inputs.image_tag }}
           manifests: |
-            deploy.yml
+            .kubernetes/deploy.yml
           strategy: canary
-          action: reject
+          action: promote

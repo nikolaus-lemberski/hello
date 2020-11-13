@@ -18,7 +18,7 @@ jobs:
           java-version: 11
 
       - name: Build with Maven
-        run: mvn spring-boot:build-image --file pom.xml --quiet -DskipTests
+        run: ./mvnw spring-boot:build-image --quiet
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -52,7 +52,7 @@ jobs:
         with:
           images: docker.io/lemberski/hello:${{steps.vars.outputs.tag}}
           manifests: |
-            deploy.yml
+            .kubernetes/deploy.yml
           strategy: canary
           percentage: 50
 
