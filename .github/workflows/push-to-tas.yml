@@ -1,4 +1,4 @@
-name: Build, push and deploy
+name: Push to TAS
 
 on:
   workflow_dispatch:
