@@ -15,10 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Update apt
-        run: sudo apt-get update
-      - name: Install cf-cli
-        run: sudo apt-get install cf7-cli
+      - run: wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+      - run: echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+      - run: sudo apt-get update
+      - run: sudo apt-get install cf7-cli
 
       - name: Login on TAS
         run: cf login -a ${{ secrets.CF_API }} -u ${{ secrets.CF_USER }} -p ${{ secrets.CF_PASSWORD }} -o tanzu -s dev
