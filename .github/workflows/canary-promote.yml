@@ -1,4 +1,4 @@
-name: Promote canary release
+name: Canary promote
 
 on:
   workflow_dispatch:
