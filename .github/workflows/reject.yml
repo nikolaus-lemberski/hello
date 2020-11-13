@@ -9,7 +9,7 @@ on:
 
 jobs:
   promote:
-    name: Promote
+    name: Reject
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
