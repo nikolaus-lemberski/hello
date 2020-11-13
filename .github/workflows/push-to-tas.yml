@@ -15,6 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Update apt
+        run: sudo apt-get update
+      - name: Install cf-cli
+        run: sudo apt-get install cf7-cli
+
+      - name: Login on TAS
+        run: cf login -a ${{ secrets.CF_API }} -u ${{ secrets.CF_USER }} -p ${{ secrets.CF_PASSWORD }} -o tanzu -s dev
+
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -23,11 +31,5 @@ jobs:
       - name: Build with Maven
         run: ./mvnw clean install --quiet
 
-      - uses: citizen-of-planet-earth/cf-cli-action@master
-        with:
-          cf_api: ${{ secrets.CF_API }}
-          cf_username: ${{ secrets.CF_USER }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          cf_org: tanzu
-          cf_space: dev
-          command: push -f ./manifest.yml
+      - name: Push to TAS
+        run: cf push -f ./manifest.yml
