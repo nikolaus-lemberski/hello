@@ -28,7 +28,7 @@ Now promote the release by running the Github action "Canary promote" with the R
 
 ## Deploy new release
 
-Change the Controller text in 'src/main/java/com/lemberski/demo/hello/HelloController.java'. Add to git and push to git remote origin. Follow the steps in 'Deploy to Kubernetes' to create a new release. Watch the pods created during deployment `watch kubectl get pods`.
+Change the Controller text in 'src/main/java/com/lemberski/demo/hello/HelloController.java'. Add to git and push to git remote origin. Follow the steps in 'Deploy to Kubernetes' to create a new release but increase the Release version (e.g. v1.0.1). Watch the pods created during deployment `watch kubectl get pods`.
 
 You should see new pods starting and should have 4 pods in total. One pod (name contains "canary") uses the new version and the service routes more or less Round Robin to all pods. So if you do several calls you should get 75% response from old version and 25% from new version.
 
