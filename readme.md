@@ -22,7 +22,7 @@ KUBECONFIG_SA_GITHUB is the config file for a serviceaccount in Kubernetes. Find
 
 Create a new Release and name it 'v1.0.0'. The Kubernetes action "Build, push and deploy" should now start. Check the logs. After the job has finished you should have 2 pods and 1 service. Check with `kubectl get pods` and get service address with `kubectl get svc`.
 
-Test the service by calling http get http://<serviceaddress>/hello
+Test the service by calling http get http://{serviceaddress}/hello
 
 Now promote the release by running the Github action "Canary promote" with the Release name 'v1.0.0' as input argument.
 
