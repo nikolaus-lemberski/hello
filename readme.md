@@ -10,7 +10,7 @@ What you need:
 
 ## Setup your Github secrets
 
-Clone the project and setup the Github secrets (> Settings > Secrets).
+Fork the project and setup the Github secrets (> Settings > Secrets).
 
 * DOCKER_USERNAME
 * DOCKER_PASSWORD
