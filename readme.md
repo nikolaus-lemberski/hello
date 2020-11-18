@@ -18,6 +18,10 @@ Fork the project and setup the Github secrets (> Settings > Secrets).
 
 KUBECONFIG_SA_GITHUB is the config file for a serviceaccount in Kubernetes. Find instructions and a script to create the kubeconfig file in '.kubernetes/serviceaccount_config.sh'.
 
+## Adapt the scripts
+
+Change the image name in .github/workflows files to your Dockerhub name. Change the kubectl config to the name of your Kubernetes serviceaccount context.
+
 ## Deploy to Kubernetes
 
 Create a new Release and name it 'v1.0.0'. The Kubernetes action "Build, push and deploy" should now start. Check the logs. After the job has finished you should have 2 pods and 1 service. Check with `kubectl get pods` and get service address with `kubectl get svc`.
